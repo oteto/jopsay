@@ -1,0 +1,8 @@
+{
+  "https://cdn.skypack.dev/-/ansi-regex@v6.0.1-GxzraLnablowdwWhs28l/dist=es2019,mode=imports/optimized/ansi-regex.js": "bcd7409101cb0334d66f0ea00163ca90344a10875319ff98de33b7464fd0cb47",
+  "https://cdn.skypack.dev/-/eastasianwidth@v0.2.0-YqCCkNRUdkw9OQ9xELa5/dist=es2019,mode=imports/optimized/eastasianwidth.js": "f45e51743483455157966e94270bce20df565ab1a5f67a7eacbbc3428d745061",
+  "https://cdn.skypack.dev/-/emoji-regex@v9.2.2-gM8YQ1gfyxrTdXQtWL6X/dist=es2019,mode=imports/optimized/emoji-regex.js": "8661677d6ccd7cc6c715d8229dbd5b751c4f1e7930b5fef522d3cfc7415bb4c5",
+  "https://cdn.skypack.dev/-/string-width@v5.1.2-oDHxtkRR2dJHhJybNR4B/dist=es2019,mode=imports/optimized/string-width.js": "fee3c5d7df1f91299da8584346db6bcca53ad2ccab2fa36fdadc2e53291f1061",
+  "https://cdn.skypack.dev/-/strip-ansi@v7.0.1-jPHeWsPbLD5eNNOWnojs/dist=es2019,mode=imports/optimized/strip-ansi.js": "a37b1e7dff2db62a466799e08a6031b36759d11babf36796133d963ff19ca62d",
+  "https://cdn.skypack.dev/string-width": "60802fa211fc5efa26be61f332f991a413f97a8308568583b3bd17895657977c"
+}
