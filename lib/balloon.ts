@@ -1,4 +1,4 @@
-import { stringWidth } from "../deps.ts";
+import { stringWidth } from "~/deps.ts";
 
 type Delimiter = [string, string];
 
