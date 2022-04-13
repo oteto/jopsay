@@ -15,11 +15,13 @@ type LineWithWidth = {
   width: number;
 };
 
+export type Balloon = "say" | "think" | "shout";
+
 const delimitersSay: Delimiters = {
   first: ["/", "\\"],
   middle: ["|", "|"],
   last: ["\\", "/"],
-  only: ["<", ">"],
+  only: ["|", "|"],
   vertical: ["_", "-"],
 };
 
@@ -31,6 +33,14 @@ const delimitersThink: Delimiters = {
   vertical: ["◠", "◡"],
 };
 
+const delimiterShout: Delimiters = {
+  first: ["⪓", "⪓"],
+  middle: ["⪓", "⪓"],
+  last: ["⪓", "⪓"],
+  only: ["⪓", "⪓"],
+  vertical: ["⩕", "⩖"],
+};
+
 const PADDING = " ";
 const PADDING_WIDTH = stringWidth(PADDING) * 2;
 
@@ -40,6 +50,10 @@ export function say(text: string): string {
 
 export function think(text: string): string {
   return format(text, delimitersThink);
+}
+
+export function shout(text: string): string {
+  return format(text, delimiterShout);
 }
 
 function format(text: string, delimiters: Delimiters): string {
@@ -66,19 +80,15 @@ function format(text: string, delimiters: Delimiters): string {
   return [
     top,
     ...linesWithWidth.map((lw, idx) => {
-      const text = padEndByStringWidth(lw, maxWidth);
-      const delimiter = idx === 0
+      const text = lw.line + " ".repeat(maxWidth - lw.width);
+      const [start, end] = idx === 0
         ? delimiters.first
         : idx === linesWithWidth.length - 1
         ? delimiters.last
         : delimiters.middle;
 
-      return `${delimiter[0]}${PADDING}${text}${PADDING}${delimiter[1]}`;
+      return `${start}${PADDING}${text}${PADDING}${end}`;
     }),
     bottom,
   ].join("\n");
-}
-
-function padEndByStringWidth(lw: LineWithWidth, maxWidth: number) {
-  return lw.line + " ".repeat(maxWidth - lw.width);
 }
