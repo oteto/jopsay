@@ -1,7 +1,8 @@
 {
 	"tasks": {
-		"cli": "deno run --allow-env=HOME,XDG_CONFIG_HOME --allow-read cli.ts",
-		"lock:write": "deno cache --lock=lock.json --lock-write deps.ts",
-		"lock:reload": "deno cache --reload --lock=lock.json deps.ts"
+		"cli": "deno run --allow-env=HOME,XDG_CONFIG_HOME --allow-read --allow-write --unstable cli.ts",
+		"install": "deno install --allow-env=HOME,XDG_CONFIG_HOME --allow-read --allow-write --unstable --force --name jopsay cli.ts",
+		"lock:write": "deno cache --unstable --lock=lock.json --lock-write deps.ts",
+		"lock:reload": "deno cache --unstable --reload --lock=lock.json deps.ts"
 	}
 }

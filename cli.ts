@@ -10,7 +10,7 @@ import {
 import { Command, readLines, Type, ValidationError } from "./deps.ts";
 
 import type { ITypeInfo } from "./deps.ts";
-import { loadConfig } from "./lib/config.ts";
+import { configureCommand, loadConfig } from "./lib/config.ts";
 
 const VERSION = "0.1.0";
 
@@ -63,6 +63,7 @@ async function main() {
   }
 
   const { args, options } = await new Command()
+    .command("configure", configureCommand).reset()
     .name("jopsay")
     .version(VERSION)
     .description("Let JOPS say all kinds of words.")
