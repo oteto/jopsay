@@ -1,8 +1,8 @@
-import { stringWidth } from "~/deps.ts";
+import { stringWidth } from "../deps.ts";
 
 type Delimiter = [string, string];
 
-type Delimiters = {
+export type Delimiters = {
   first: Delimiter;
   middle: Delimiter;
   last: Delimiter;
@@ -15,7 +15,14 @@ type LineWithWidth = {
   width: number;
 };
 
-export type Balloon = "say" | "think" | "shout";
+export const BalloonTypes = [
+  "say" as const,
+  "think" as const,
+  "shout" as const,
+  "config" as const,
+];
+
+export type Balloon = typeof BalloonTypes[number];
 
 const delimitersSay: Delimiters = {
   first: ["/", "\\"],
@@ -54,6 +61,10 @@ export function think(text: string): string {
 
 export function shout(text: string): string {
   return format(text, delimiterShout);
+}
+
+export function configSay(text: string, delimiter: Delimiters): string {
+  return format(text, delimiter);
 }
 
 function format(text: string, delimiters: Delimiters): string {

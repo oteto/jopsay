@@ -1,18 +1,26 @@
-import { jopsAA, jopsColorAA } from "~/lib/asciiArt.ts";
-import { Balloon, say, shout, think } from "~/lib/balloon.ts";
-import { Command, readLines, Type, ValidationError } from "~/deps.ts";
+import { jopsAA, jopsColorAA } from "./lib/asciiArt.ts";
+import {
+  Balloon,
+  BalloonTypes,
+  configSay,
+  say,
+  shout,
+  think,
+} from "./lib/balloon.ts";
+import { Command, readLines, Type, ValidationError } from "./deps.ts";
 
-import type { ITypeInfo } from "~/deps.ts";
+import type { ITypeInfo } from "./deps.ts";
+import { loadConfig } from "./lib/config.ts";
 
 const VERSION = "0.1.0";
 
 class BalloonType extends Type<Balloon> {
   complete(): Array<Balloon> {
-    return ["say", "think", "shout"];
+    return BalloonTypes;
   }
 
   values(): Array<Balloon> {
-    return ["say", "think", "shout"];
+    return BalloonTypes;
   }
 
   parse({ label, name, value }: ITypeInfo): Balloon {
@@ -27,7 +35,9 @@ class BalloonType extends Type<Balloon> {
     return value as Balloon;
   }
 
-  static formatter(balloonType: Balloon): [(text: string) => string, string] {
+  static async formatter(
+    balloonType: Balloon,
+  ): Promise<[(text: string) => string, string]> {
     switch (balloonType) {
       case "say":
         return [say, "\\"];
@@ -35,6 +45,10 @@ class BalloonType extends Type<Balloon> {
         return [think, "°"];
       case "shout":
         return [shout, "≷"];
+      case "config": {
+        const config = await loadConfig();
+        return [(text: string) => configSay(text, config), config.thought];
+      }
     }
   }
 }
@@ -44,7 +58,7 @@ async function main() {
   const isatty = Deno.isatty(Deno.stdin.rid);
   if (!isatty) {
     for await (const line of readLines(Deno.stdin)) {
-      stdin.push(line);
+      stdin.push(line.replaceAll("\t", "  ") + "\x1b[37m");
     }
   }
 
@@ -62,7 +76,7 @@ async function main() {
     .arguments("<text:string>")
     .parse(isatty ? Deno.args : [...Deno.args, stdin.join("\n")]);
 
-  const [format, l] = BalloonType.formatter(options.format as Balloon);
+  const [format, l] = await BalloonType.formatter(options.format as Balloon);
   const jops = options.color ? jopsColorAA(l) : jopsAA(l);
 
   console.log(format(args[0]) + jops);
